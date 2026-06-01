@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Research OS</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='ig' x1='0%25' y1='100%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%23f9a825'/><stop offset='35%25' stop-color='%23f44336'/><stop offset='65%25' stop-color='%23e91e8c'/><stop offset='100%25' stop-color='%239c27b0'/></linearGradient></defs><rect width='32' height='32' rx='7' fill='%230f0f10'/><line x1='16' y1='8' x2='8' y2='20' stroke='url(%23ig)' stroke-width='1.8' stroke-linecap='round'/><line x1='16' y1='8' x2='24' y2='20' stroke='url(%23ig)' stroke-width='1.8' stroke-linecap='round'/><line x1='8' y1='20' x2='24' y2='20' stroke='url(%23ig)' stroke-width='1.8' stroke-linecap='round'/><circle cx='16' cy='8' r='3' fill='%23f9a825'/><circle cx='8' cy='20' r='2.5' fill='%23e91e8c'/><circle cx='24' cy='20' r='2.5' fill='%239c27b0'/></svg>"/> 
+<title>ResearchOS</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='ig' x1='0%25' y1='100%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%23f9a825'/><stop offset='35%25' stop-color='%23f44336'/><stop offset='65%25' stop-color='%23e91e8c'/><stop offset='100%25' stop-color='%239c27b0'/></linearGradient></defs><rect width='32' height='32' rx='7' fill='%230f0f10'/><line x1='16' y1='8' x2='8' y2='20' stroke='url(%23ig)' stroke-width='1.8' stroke-linecap='round'/><line x1='16' y1='8' x2='24' y2='20' stroke='url(%23ig)' stroke-width='1.8' stroke-linecap='round'/><line x1='8' y1='20' x2='24' y2='20' stroke='url(%23ig)' stroke-width='1.8' stroke-linecap='round'/><circle cx='16' cy='8' r='3' fill='%23f9a825'/><circle cx='8' cy='20' r='2.5' fill='%23e91e8c'/><circle cx='24' cy='20' r='2.5' fill='%239c27b0'/></svg>"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
- 
+
 :root{
   --bg:#ffffff;--bg2:#f7f7f8;--bg3:#f0f0f2;--bg-hover:#f4f4f6;
   --border:#e5e5e8;--border2:#d8d8dc;
@@ -39,10 +39,10 @@
     --purple:#8b5cf6;--purple-bg:#1a1030;--purple-text:#b088f8;
   }
 }
- 
+
 html,body{height:100%;overflow:hidden}
 body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14px;display:flex}
- 
+
 /* ── Sidebar ── */
 .sidebar{
   width:var(--sidebar-w);min-width:var(--sidebar-w);height:100vh;
@@ -55,7 +55,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
 .app-icon{width:22px;height:22px;background:var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:600;flex-shrink:0}
 .app-label{font-size:13px;font-weight:600;color:var(--text);letter-spacing:-.01em}
 .app-sub{font-size:11px;color:var(--text3)}
- 
+
 .search-wrap{padding:8px 10px}
 .search-box{
   width:100%;background:var(--bg3);border:1px solid var(--border);
@@ -66,7 +66,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
 .search-box:focus{border-color:var(--accent)}
 .search-wrap-inner{position:relative}
 .search-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:14px;pointer-events:none}
- 
+
 .nav-section{padding:4px 10px 2px;font-size:11px;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;font-weight:500;margin-top:8px}
 .nav-item{
   display:flex;align-items:center;gap:8px;padding:6px 10px;margin:1px 4px;
@@ -78,7 +78,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
 .nav-item i{font-size:15px;flex-shrink:0;width:16px;text-align:center}
 .nav-count{margin-left:auto;font-size:11px;background:var(--bg3);color:var(--text3);padding:1px 6px;border-radius:10px;font-weight:400}
 .nav-item.active .nav-count{background:var(--border2)}
- 
+
 .sidebar-bottom{margin-top:auto;padding:10px;border-top:1px solid var(--border)}
 .new-btn{
   width:100%;display:flex;align-items:center;justify-content:center;gap:6px;
@@ -87,7 +87,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
   font-family:var(--font);transition:opacity .15s;
 }
 .new-btn:hover{opacity:.88}
- 
+
 /* ── Main ── */
 .main{flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden;min-width:0}
 .topbar{
@@ -111,12 +111,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
   background:none;font-size:16px;transition:all .12s;
 }
 .icon-btn:hover{background:var(--bg3);color:var(--text)}
- 
+
 .content{flex:1;overflow-y:auto;padding:20px}
 .content::-webkit-scrollbar{width:6px}
 .content::-webkit-scrollbar-track{background:transparent}
 .content::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
- 
+
 /* ── Cards ── */
 .cards-grid{display:flex;flex-direction:column;gap:8px}
 .card{
@@ -141,7 +141,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
 .sev-medium{background:var(--blue-bg);color:var(--blue-text)}
 .sev-low{background:var(--green-bg);color:var(--green-text)}
 .sev-info{background:var(--bg3);color:var(--text2)}
- 
+
 /* ── Detail panel ── */
 .detail-overlay{
   display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);
@@ -214,7 +214,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
   transition:all .15s;
 }
 .btn-delete:hover{background:var(--red-bg);color:var(--red-text);border-color:var(--red)}
- 
+
 /* ── Modal (new entry) ── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
 .modal-overlay.open{display:flex}
@@ -235,21 +235,21 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
 .btn-primary:hover{opacity:.88}
 .btn-cancel{flex:1;background:none;color:var(--text2);border:1px solid var(--border);padding:9px;border-radius:7px;font-size:13px;cursor:pointer;font-family:var(--font)}
 .btn-cancel:hover{background:var(--bg3)}
- 
+
 /* ── Empty state ── */
 .empty{text-align:center;padding:4rem 2rem;color:var(--text3)}
 .empty i{font-size:32px;margin-bottom:12px;display:block;opacity:.4}
 .empty p{font-size:13px;line-height:1.6}
- 
+
 /* ── Section-specific field sets ── */
 .checklist-item{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid var(--border)}
 .checklist-item:last-child{border-bottom:none}
 .checklist-cb{width:15px;height:15px;accent-color:var(--accent);margin-top:1px;flex-shrink:0;cursor:pointer}
 .checklist-label{font-size:13px;color:var(--text);flex:1}
 .checklist-item.checked .checklist-label{text-decoration:line-through;color:var(--text3)}
- 
+
 .select-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
- 
+
 /* ── Scrollbars global ── */
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:transparent}
@@ -257,14 +257,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
 </style>
 </head>
 <body>
- 
+
 <!-- Sidebar -->
 <nav class="sidebar">
   <div class="sidebar-top">
     <div class="app-name">
       <div class="app-icon">OS</div>
       <div>
-        <div class="app-label">Research OS</div>
+        <div class="app-label">ResearchOS</div>
         <div class="app-sub">personal research vault</div>
       </div>
     </div>
@@ -275,7 +275,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
       <input class="search-box" type="text" id="globalSearch" placeholder="Search everything…" autocomplete="off"/>
     </div>
   </div>
- 
+
   <div class="nav-section">Security</div>
   <div class="nav-item active" data-section="cve" onclick="nav(this)">
     <i class="ti ti-bug" aria-hidden="true"></i> CVE Research
@@ -293,7 +293,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
     <i class="ti ti-checklist" aria-hidden="true"></i> Secure Review
     <span class="nav-count" id="cnt-securereview">0</span>
   </div>
- 
+
   <div class="nav-section">Engineering</div>
   <div class="nav-item" data-section="dsa" onclick="nav(this)">
     <i class="ti ti-binary-tree" aria-hidden="true"></i> DSA Patterns
@@ -307,14 +307,19 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
     <i class="ti ti-code" aria-hidden="true"></i> Code Review
     <span class="nav-count" id="cnt-codereview">0</span>
   </div>
- 
+
   <div class="sidebar-bottom">
     <button class="new-btn" onclick="openNewModal()">
       <i class="ti ti-plus" aria-hidden="true"></i> New entry
     </button>
+    <div style="display:flex;gap:5px;margin-top:6px">
+      <button onclick="exportData()" style="flex:1;padding:7px;border-radius:7px;border:1px solid var(--border);background:none;color:var(--text2);font-size:12px;font-weight:500;cursor:pointer;font-family:var(--font);transition:all .12s" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background='none'">↑ Export</button>
+      <button onclick="document.getElementById('kbImportFile').click()" style="flex:1;padding:7px;border-radius:7px;border:1px solid var(--border);background:none;color:var(--text2);font-size:12px;font-weight:500;cursor:pointer;font-family:var(--font);transition:all .12s" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background='none'">↓ Import</button>
+      <input type="file" id="kbImportFile" accept=".json" style="display:none" onchange="importData(event)"/>
+    </div>
   </div>
 </nav>
- 
+
 <!-- Main -->
 <div class="main">
   <div class="topbar">
@@ -328,7 +333,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
     <div class="cards-grid" id="cardsGrid"></div>
   </div>
 </div>
- 
+
 <!-- Detail panel -->
 <div class="detail-overlay" id="detailOverlay" onclick="closeDetail()"></div>
 <div class="detail-panel" id="detailPanel">
@@ -343,7 +348,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
     <button class="btn-delete" onclick="deleteEntry()">Delete</button>
   </div>
 </div>
- 
+
 <!-- New entry modal -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
@@ -369,7 +374,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
     </div>
   </div>
 </div>
- 
+
 <script>
 // ── Constants ──
 const SECTIONS = {
@@ -381,7 +386,7 @@ const SECTIONS = {
   sysdesign:    { label:'System Design',   icon:'ti-topology-star',color:'var(--accent-bg)', iconColor:'var(--accent-text)' },
   codereview:   { label:'Code Review',     icon:'ti-code',         color:'var(--green-bg)',  iconColor:'var(--green-text)' },
 };
- 
+
 const TAG_COLORS = [
   'background:var(--accent-bg);color:var(--accent-text)',
   'background:var(--green-bg);color:var(--green-text)',
@@ -393,20 +398,20 @@ function tagStyle(tag){
   let h=0;for(let c of tag)h=(h*31+c.charCodeAt(0))%TAG_COLORS.length;
   return TAG_COLORS[h];
 }
- 
+
 // ── State ──
 let state = loadState();
 let currentSection = 'cve';
 let activeTag = null;
 let editingId = null;
 let searchQuery = '';
- 
+
 function loadState(){
   try{ const r=localStorage.getItem('kb_v1'); if(r) return JSON.parse(r); }catch(e){}
   return { entries: defaultEntries() };
 }
 function save(){ localStorage.setItem('kb_v1', JSON.stringify(state)); }
- 
+
 function defaultEntries(){
   const now = () => new Date().toISOString();
   return [
@@ -428,16 +433,16 @@ function defaultEntries(){
       tags:['recon','network'], category:'recon',
       content:`# Quick scan
 nmap -sV -sC -oN scan.txt TARGET
- 
+
 # Full port scan
 nmap -p- --min-rate 5000 TARGET
- 
+
 # UDP scan (top 100)
 nmap -sU --top-ports 100 TARGET
- 
+
 # OS detection
 nmap -O -A TARGET
- 
+
 # Script scan
 nmap --script vuln TARGET`, notes:'', createdAt:now() },
     { id:4, section:'cheatsheet', title:'SQL injection payloads', subtitle:'Auth bypass, error-based, blind',
@@ -446,18 +451,18 @@ nmap --script vuln TARGET`, notes:'', createdAt:now() },
 ' OR '1'='1
 ' OR 1=1--
 admin'--
- 
+
 # Error-based (MySQL)
 ' AND extractvalue(1,concat(0x7e,(SELECT version())))--
- 
+
 # Blind boolean
 ' AND 1=1--   (true)
 ' AND 1=2--   (false)
- 
+
 # Time-based blind
 ' AND SLEEP(5)--
 '; WAITFOR DELAY '0:0:5'--
- 
+
 # UNION-based
 ' ORDER BY 3--
 ' UNION SELECT null,null,null--`, notes:'', createdAt:now() },
@@ -504,7 +509,7 @@ admin'--
         window_sum += nums[i] - nums[i-k]
         max_sum = max(max_sum, window_sum)
     return max_sum
- 
+
 # Variable window (expand/shrink)
 def longest_no_repeat(s):
     seen = {}
@@ -548,11 +553,11 @@ def longest_no_repeat(s):
       tags:['security','web','python'], type:'pattern',
       pattern:`# Bad — binds all request params to model
 user = User(**request.json)
- 
+
 # Good — explicit allowlist
 ALLOWED = {'name', 'email', 'bio'}
 user = User(**{k:v for k,v in request.json.items() if k in ALLOWED})
- 
+
 # Django — use fields= in serializer
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -563,7 +568,7 @@ class UserSerializer(serializers.ModelSerializer):
       notes:'', createdAt:now() },
   ];
 }
- 
+
 // ── Navigation ──
 function nav(el){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
@@ -575,20 +580,20 @@ function nav(el){
   renderTagFilter();
   renderCards();
 }
- 
+
 // ── Search ──
 document.getElementById('globalSearch').addEventListener('input', e=>{
   searchQuery = e.target.value.toLowerCase();
   renderCards();
 });
- 
+
 // ── Tags ──
 function allTagsForSection(){
   const tags = new Set();
   state.entries.filter(e=>e.section===currentSection).forEach(e=>(e.tags||[]).forEach(t=>tags.add(t)));
   return [...tags];
 }
- 
+
 function renderTagFilter(){
   const wrap = document.getElementById('tagFilter');
   const tags = allTagsForSection();
@@ -601,7 +606,7 @@ function renderTagFilter(){
     wrap.appendChild(chip);
   });
 }
- 
+
 // ── Cards ──
 function renderCards(){
   updateCounts();
@@ -612,24 +617,24 @@ function renderCards(){
     const q=searchQuery;
     return (e.title||'').toLowerCase().includes(q)||(e.subtitle||'').toLowerCase().includes(q)||(e.description||e.content||e.pattern||'').toLowerCase().includes(q)||(e.tags||[]).join(' ').toLowerCase().includes(q);
   });
- 
+
   if(!entries.length){
     grid.innerHTML=`<div class="empty"><i class="ti ti-inbox" aria-hidden="true"></i><p>${searchQuery||activeTag?'No results found.':'No entries yet. Hit + to add your first one.'}</p></div>`;
     return;
   }
- 
+
   grid.innerHTML='';
   entries.forEach(entry=>{
     const s = SECTIONS[entry.section];
     const card = document.createElement('div');
     card.className='card';
     card.onclick=()=>openDetail(entry.id);
- 
+
     const body = entry.description||entry.content||entry.pattern||entry.threats||entry.template||entry.components||'';
     const tagsHtml = (entry.tags||[]).map(t=>`<span class="tag" style="${tagStyle(t)}">${t}</span>`).join('');
     const severityHtml = entry.severity?`<span class="severity sev-${entry.severity}">${entry.severity}</span>`:'';
     const date = entry.createdAt ? new Date(entry.createdAt).toLocaleDateString('en-GB',{day:'numeric',month:'short'}) : '';
- 
+
     card.innerHTML=`
       <div class="card-header">
         <div class="card-icon" style="background:${s.color}"><i class="ti ${s.icon}" style="color:${s.iconColor}" aria-hidden="true"></i></div>
@@ -644,39 +649,39 @@ function renderCards(){
     grid.appendChild(card);
   });
 }
- 
+
 function updateCounts(){
   Object.keys(SECTIONS).forEach(s=>{
     const el=document.getElementById('cnt-'+s);
     if(el) el.textContent=state.entries.filter(e=>e.section===s).length;
   });
 }
- 
+
 // ── Detail panel ──
 function openDetail(id){
   const entry = state.entries.find(e=>e.id===id);
   if(!entry) return;
   editingId = id;
   const s = SECTIONS[entry.section];
- 
+
   const icon = document.getElementById('detailIcon');
   icon.style.background = s.color;
   icon.innerHTML = `<i class="ti ${s.icon}" style="color:${s.iconColor}" aria-hidden="true"></i>`;
   document.getElementById('detailSectionLabel').textContent = s.label;
- 
+
   document.getElementById('detailBody').innerHTML = buildDetailForm(entry);
   bindTagsInput();
- 
+
   document.getElementById('detailOverlay').classList.add('open');
   document.getElementById('detailPanel').classList.add('open');
 }
- 
+
 function closeDetail(){
   document.getElementById('detailOverlay').classList.remove('open');
   document.getElementById('detailPanel').classList.remove('open');
   editingId = null;
 }
- 
+
 function buildDetailForm(e){
   const tagsVal = (e.tags||[]).map(t=>`<span class="tag-input-chip"><span>${esc(t)}</span><span class="tag-rm" data-tag="${esc(t)}">×</span></span>`).join('');
   let html = `
@@ -685,7 +690,7 @@ function buildDetailForm(e){
     <div class="detail-field"><div class="field-label">Tags</div>
       <div class="tags-input-wrap" id="tagsWrap">${tagsVal}<input class="tag-text-input" id="tagTextInput" placeholder="Add tag + enter"/></div>
     </div>`;
- 
+
   if(e.section==='cve'){
     html+=`
       <div class="select-row">
@@ -745,16 +750,16 @@ function buildDetailForm(e){
       <div class="detail-field"><div class="field-label">Root Cause</div><textarea class="field-textarea" id="df-rootCause" rows="2">${esc(e.rootCause||'')}</textarea></div>
       <div class="detail-field"><div class="field-label">Fix / Recommendation</div><textarea class="field-textarea" id="df-fix" rows="3">${esc(e.fix||'')}</textarea></div>`;
   }
- 
+
   html+=`<div class="detail-field"><div class="field-label">Notes</div><textarea class="field-textarea" id="df-notes" rows="3" placeholder="Additional notes…">${esc(e.notes||'')}</textarea></div>`;
   return html;
 }
- 
+
 function bindTagsInput(){
   const wrap = document.getElementById('tagsWrap');
   const input = document.getElementById('tagTextInput');
   if(!wrap||!input) return;
- 
+
   input.addEventListener('keydown', e=>{
     if((e.key==='Enter'||e.key===',')&&input.value.trim()){
       e.preventDefault();
@@ -772,7 +777,7 @@ function bindTagsInput(){
   });
   wrap.onclick=()=>input.focus();
 }
- 
+
 function addTagToWrap(tag){
   const wrap=document.getElementById('tagsWrap');
   const input=document.getElementById('tagTextInput');
@@ -782,11 +787,11 @@ function addTagToWrap(tag){
   chip.querySelector('.tag-rm').onclick=()=>chip.remove();
   wrap.insertBefore(chip,input);
 }
- 
+
 function getCurrentTags(){
   return [...document.querySelectorAll('#tagsWrap .tag-input-chip span:first-child')].map(s=>s.textContent.trim()).filter(Boolean);
 }
- 
+
 function toggleCheck(idx, val){
   const entry = state.entries.find(e=>e.id===editingId);
   if(entry&&entry.checklist&&entry.checklist[idx]){
@@ -796,7 +801,7 @@ function toggleCheck(idx, val){
     save();
   }
 }
- 
+
 function addCheckItem(){
   const input=document.getElementById('newCheckItem');
   const text=(input.value||'').trim();
@@ -809,7 +814,7 @@ function addCheckItem(){
   input.value='';
   openDetail(editingId);
 }
- 
+
 function saveEntry(){
   const entry = state.entries.find(e=>e.id===editingId);
   if(!entry) return;
@@ -818,7 +823,7 @@ function saveEntry(){
   entry.subtitle = g('df-subtitle');
   entry.tags = getCurrentTags();
   entry.notes = g('df-notes');
- 
+
   if(entry.section==='cve'){
     entry.severity=g('df-severity');entry.affected=g('df-affected');
     entry.description=g('df-description');entry.poc=g('df-poc');
@@ -840,16 +845,16 @@ function saveEntry(){
     entry.type=g('df-type');entry.pattern=g('df-pattern');
     entry.rootCause=g('df-rootCause');entry.fix=g('df-fix');
   }
- 
+
   save(); renderCards(); renderTagFilter(); closeDetail();
 }
- 
+
 function deleteEntry(){
   if(!confirm('Delete this entry?')) return;
   state.entries = state.entries.filter(e=>e.id!==editingId);
   save(); renderCards(); renderTagFilter(); updateCounts(); closeDetail();
 }
- 
+
 // ── New entry modal ──
 function openNewModal(){
   const sel=document.getElementById('newSection');
@@ -891,15 +896,47 @@ function createEntry(){
   renderCards();
   setTimeout(()=>openDetail(entry.id),50);
 }
- 
+
 document.getElementById('modalOverlay').onclick=e=>{ if(e.target===e.currentTarget) closeModal(); };
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){ closeModal(); closeDetail(); }
   if(e.key==='Enter'&&document.getElementById('modalOverlay').classList.contains('open')&&document.activeElement.tagName!=='TEXTAREA'){ e.preventDefault(); createEntry(); }
 });
- 
+
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
- 
+
+// ── Export / Import ──
+function exportData(){
+  const data = JSON.stringify(state, null, 2);
+  const blob = new Blob([data], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const date = new Date().toISOString().split('T')[0];
+  a.href=url; a.download=`researchos-backup-${date}.json`;
+  a.click(); URL.revokeObjectURL(url);
+}
+function importData(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = evt => {
+    try{
+      const data = JSON.parse(evt.target.result);
+      if(!data.entries) throw new Error('Invalid');
+      if(!confirm('Import this backup? Your current data will be replaced.')) return;
+      state = data;
+      save();
+      renderTagFilter();
+      renderCards();
+      updateCounts();
+    } catch(err){
+      alert('Invalid ResearchOS backup file.');
+    }
+  };
+  reader.readAsText(file);
+  e.target.value='';
+}
+
 // ── Init ──
 renderTagFilter();
 renderCards();
